@@ -1,0 +1,15 @@
+com.rrs.corona.beans
+com.rrs.corona.server.adapterreceiver
+com.rrs.corona.server.sas
+com.rrs.corona.solutionsacceleratorstudio
+com.rrs.corona.solutionsacceleratorstudio.dataobject
+com.rrs.corona.solutionsacceleratorstudio.datasource
+com.rrs.corona.solutionsacceleratorstudio.dragdrop
+com.rrs.corona.solutionsacceleratorstudio.license
+com.rrs.corona.solutionsacceleratorstudio.messagehandler
+com.rrs.corona.solutionsacceleratorstudio.orm
+com.rrs.corona.solutionsacceleratorstudio.plugin
+com.rrs.corona.solutionsacceleratorstudio.project
+com.rrs.corona.solutionsacceleratorstudio.publisher
+com.rrs.corona.solutionsacceleratorstudio.sasutil
+com.rrs.corona.solutionsacceleratorstudio.solutionadapter

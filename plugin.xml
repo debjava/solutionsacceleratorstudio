@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin
+   id="solutionsacceleratorstudio"
+   name="Solutionsacceleratorstudio Plug-in"
+   version="1.0.0"
+   provider-name=""
+   class="com.rrs.corona.solutionsacceleratorstudio.plugin.SolutionsacceleratorstudioPlugin">
+
+   <runtime>
+      <library name="solutionsacceleratorstudio.jar">
+         <export name="*"/>
+      </library>
+      <library name ="lib/corona-transport-framework.jar" />
+      <library name ="lib/coronakernel.jar" />
+      <library name ="lib/log4j.jar" />                      
+        <library name ="lib/jsr173_api.jar" />                      
+      <library name ="lib/sjsxp.jar" />                      
+       
+      <library name="lib/xercesImpl.jar"/>
+      <library name="lib/dom.jar"/>
+      <library name="lib/jaxp-api.jar"/>
+	  <library name="lib/xalan.jar"/>
+	  <library name="lib/sax.jar"/>
+	  
+	  
+	  <library name="lib/activation.jar"/>
+      <library name="lib/jaas.jar"/>
+      <library name="lib/jta-spec1_0_1.jar"/>
+	  <library name="lib/mail.jar"/>
+	  <library name="lib/relaxngDatatype.jar"/>
+	  <library name="lib/resolver.jar"/>
+	  <library name="lib/xmlsec.jar"/>
+	  <library name="lib/xsdlib.jar"/>
+	  
+                        
+      <library name="lib/schema.jar"/>
+      <library name="lib/corona-common.jar"/>
+      <library name="lib/jaxb1-impl.jar"/>
+	  <library name="lib/jaxb-impl.jar"/>
+	  <library name="lib/jaxb-api.jar"/>
+	  <library name="lib/jaxb-xjc.jar"/>
+	  <library name="lib/tools.jar"/>
+	  <library name="lib/jboss402/jbossall-client.jar"/>
+	  <library name="lib/jboss402/jboss-j2ee.jar"/>
+	  <library name="lib/jboss402/jboss-jmx.jar"/>
+	  <library name="lib/jboss402/jboss-system.jar"/>
+	  <library name="lib/jboss402/jboss.jar"/>
+	  <library name="lib/log4j-1.2.9.jar"/>
+	  <library name="lib/commons-logging.jar"/>
+  	  <library name="lib/classes12.jar"/>
+  	  <library name="lib/OJB_LIB_1.4/commons-collections-3.1.jar"/>
+  	  <library name="lib/OJB_LIB_1.4/classes12.jar"/>
+  	  <library name="lib/OJB_LIB_1.4/commons-dbcp-1.2.1.jar"/>
+  	  <library name="lib/OJB_LIB_1.4/commons-lang-2.1.jar"/>
+  	  <library name="lib/OJB_LIB_1.4/commons-logging.jar"/>
+  	  <library name="lib/OJB_LIB_1.4/commons-pool-1.2.jar"/>
+  	  <library name="lib/OJB_LIB_1.4/db-ojb-1.0.4.jar"/>
+  	  <library name="lib/OJB_LIB_1.4/log4j-1.2.8.jar"/>
+  	  <library name="lib/OJB_LIB_1.4/xercesImpl-2.7.1.jar"/>
+  	  <library name="lib/commons-codec-1.3.jar"/>
+  	  <library name="lib/jug.jar"/>
+  	  <library name="lib/licenseapi.jar"/>
+  	  <library name="lib/licenseclient.jar"/>
+  	  <library name="lib/licenseutil.jar"/>
+  	  <library name="lib/rrslicense.jar"/>
+ 
+   </runtime>
+
+   <!--requires>
+      <import plugin="org.eclipse.ui"/>
+      <import plugin="org.eclipse.core.runtime"/>
+   </requires-->
+   <requires>
+        <import plugin="org.eclipse.core.runtime"/>
+        <import plugin="org.eclipse.ui"/>
+        <import plugin="org.eclipse.core.resources"/>
+        <import plugin="org.eclipse.update.configurator"/>
+	    <import plugin="org.eclipse.core.boot"/>
+   	    <import plugin="org.eclipse.team.core"/>
+    </requires>
+   
+   <extension
+         point="org.eclipse.ui.views">
+      <category
+            name="Data Source"
+            id="SAS">
+      </category>
+      <view
+            name="Data Source"
+            icon="icons/sample.gif"
+            category="SAS"
+            class="com.rrs.corona.solutionsacceleratorstudio.plugin.DatabaseViewer"
+            id="com.rrs.corona.solutionsacceleratorstudio.plugin.DatabaseViewer">
+      </view>
+   </extension>
+   
+   <extension
+         point="org.eclipse.ui.views">
+      <category
+            name="Intermediate Data Object"
+            id="SAS">
+      </category>
+      <view
+            name="Intermediate Data Object"
+            icon="icons/sample.gif"
+            category="SAS"
+            class="com.rrs.corona.solutionsacceleratorstudio.dataobject.DataObjectView"
+            id="com.rrs.corona.solutionsacceleratorstudio.dataobject.DataObjectView">
+      </view>
+   </extension>
+   
+   <extension
+         point="org.eclipse.ui.views">
+      <category
+            name="Properties"
+            id="SAS">
+      </category>
+      <view
+            name="Properties"
+            icon="icons/sample.gif"
+            category="SAS"
+            class="com.rrs.corona.solutionsacceleratorstudio.dataobject.DataObjectTableView"
+            id="com.rrs.corona.solutionsacceleratorstudio.dataobject.DataObjectTableView">
+      </view>
+   </extension>
+  
+    <extension
+         point="org.eclipse.ui.views">
+      <category
+            name="Object mapping"
+            id="SAS">
+      </category>
+      <view
+            name="Object Mapping"
+            icon="icons/sample.gif"
+            category="SAS"
+            class="com.rrs.corona.solutionsacceleratorstudio.dataobject.ObjectMapping"
+            id="com.rrs.corona.solutionsacceleratorstudio.dataobject.ObjectMapping">
+      </view>
+   </extension>
+   
+   <extension
+         point="org.eclipse.ui.views">
+      <category
+            name="Solution Adapter"
+            id="SAS">
+      </category>
+      <view
+            name="Solutions Adapter"
+            icon="icons/sample.gif"
+            category="SAS"
+            class="com.rrs.corona.solutionsacceleratorstudio.solutionadapter.SolutionAdapterView"
+            id="com.rrs.corona.solutionsacceleratorstudio.solutionadapter.SolutionAdapterView">
+      </view>
+   </extension>
+   
+   <extension
+         point="org.eclipse.ui.views">
+      <category
+            name="Published Projects"
+            id="SAS">
+      </category>
+      <view
+            name="Published Projects"
+            icon="icons/sample.gif"
+            category="SAS"
+            class="com.rrs.corona.solutionsacceleratorstudio.project.ProjectData"
+            id="com.rrs.corona.solutionsacceleratorstudio.project.ProjectData">
+      </view>
+   </extension>
+   
+   <extension
+            point="org.eclipse.ui.perspectives">
+        <perspective
+              class="com.rrs.corona.solutionsacceleratorstudio.DatabasePerspective"
+              icon="icons/blue-ball.gif"
+              fixed="false"
+              name="SASPerspective"
+              id="com.rrs.corona.solutionsacceleratorstudio.DatabasePerspective">
+        </perspective>
+     </extension>
+     
+     <!-- perspective extension  -->
+     
+      <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+         <perspectiveExtension
+            targetID="com.rrs.corona.solutionsacceleratorstudio.DatabasePerspective">
+            <perspectiveShortcut id="com.rrs.corona.solutionsacceleratorstudio.DatabasePerspective" />
+            <view id ="com.rrs.corona.solutionsacceleratorstudio.plugin.DatabaseViewer"
+                  relative ="com.rrs.corona.solutionsacceleratorstudio.dataobject.DataObjectView"
+                  relationship="right"
+                  ratio="0.5"/>
+        </perspectiveExtension>
+   </extension>
+     
+   <!-- Solutions Accelerator Studio Menu -->
+    <extension
+            point="org.eclipse.ui.actionSets">
+      <actionSet
+            label="File Action Set"
+            visible="true"
+            id="sas_actions">           
+          
+          
+            <!-- Creating SolutionAccelerator Menu /-->       
+               <menu
+                   label="&amp;SAS"
+                   path="additions"
+                   id="solution.accelerator">
+                   <separator name="sas_separator"/>
+                   <separator name="sas1_separator"/>
+                   <separator name="sas2_separator"/>
+               </menu>
+    
+                 <!-- Menu Item to Configure the Category XML file /-->  
+               
+                 
+               <action
+                  label="&amp;Delete Data Source"
+                  class="com.rrs.corona.solutionsacceleratorstudio.plugin.DeleteDataSource"
+                  menubarPath="solution.accelerator/sas2_separator"
+                  id="com.rrs.corona.solutionsacceleratorstudio.DeleteDataSource">
+               </action>
+               
+               <action
+                  label="&amp;Rename Data Source"
+                  class="com.rrs.corona.solutionsacceleratorstudio.plugin.RenameDataSource"
+                  menubarPath="solution.accelerator/sas2_separator"
+                  id="com.rrs.corona.solutionsacceleratorstudio.RenameDataSource">
+               </action>
+                   
+               <action
+                  label="&amp;Create Data Source"
+                  class="com.rrs.corona.solutionsacceleratorstudio.plugin.CreateDataSource"
+                  menubarPath="solution.accelerator/sas2_separator"
+                  id="com.rrs.corona.solutionsacceleratorstudio.CreateDataSource">
+               </action>
+               
+                <action
+                  label="&amp;Add CMS Server"
+                  class="com.rrs.corona.solutionsacceleratorstudio.solutionadapter.AddCMSServer"
+                  menubarPath="solution.accelerator/sas2_separator"
+                  id="com.rrs.corona.solutionsacceleratorstudio.solutionadapter.AddCMSServer">
+               </action>
+               
+                    
+       </actionSet>
+       
+      </extension>
+
+	  <!-- Use of shortcut keys -->
+
+   <extension
+           point="org.eclipse.ui.commands">
+         <command
+            name="command.find.name"
+            description="command.find.description"
+            id="com.FindData">
+         </command>
+  </extension>
+
+  <extension
+   	    point="org.eclipse.ui.bindings">
+     <key
+        commandId="com.FindData"
+        sequence="M1+M2+F"
+        schemeId="org.eclipse.ui.defaultAcceleratorConfiguration" />
+	</extension>
+	<extension  
+         point="org.eclipse.ui.intro">
+      <introProductBinding
+            introId="sas.platform.intro"
+            productId="com.rrs.corona.sas.ide">
+      </introProductBinding>
+    </extension>
+    
+	<extension id="ide" point="org.eclipse.core.runtime.products"> 
+      <product name="SolutionsAcceleratorStudio" application="org.eclipse.ui.ide.workbench" description="%productBlurb"> 
+           <property name="windowImages" value="icons/blue-ball.gif,eclipse32.gif,eclipse48.gif,icons/blue-ball.png,eclipse32.png,eclipse48.png"/> 
+          <property name="aboutImage"              value="icons/blue-ball.gif"/>
+          <property name="aboutText"               value="%productBlurb"/> 
+          <property name="appName"                 value="sas"/> 
+          <property name="preferenceCustomization" value="plugin_customization.ini"/> 
+      </product> 
+   </extension>
+
+</plugin>

@@ -1,0 +1,168 @@
+<project name="sas" default="makeplugin" basedir=".">
+
+		<!-- =================== -->
+		<!-- Basic Configuration -->
+		<!-- =================== -->
+
+		<!-- Module name(s) & version -->
+		<property name="module.name"					value="SolutionsaAcceleratorStudio"/>
+		<property name="module.Name"					value="SolutionsaAcceleratorStudio"/>
+		<property name="module.version"					value="DEV"/>
+
+		<property environment="env"/>
+		
+        <property name="sas.main"		      			value="${corona.sources.main}"/>
+	    <property name="sas.src"           				value="${sas.main}/solutionsacceleratorstudio/src"/>
+	    <property name="sas.config"           			value="${sas.main}/config"/>		
+	    <property name="sas.bin"            			value="${sas.main}/solutionsacceleratorstudio/bin"/>
+	    <property name="sas.deploy"		   				value="${jboss.home}/server/default/deploy/"/>
+	    <property name="corona.corelibs"				value="${corona.corelibs}"/>
+ 	    <property name="corona.externallibs"	        value="${corona.externallibs}"/>
+	    <property name="eclipse.win32.plugins"			value="${corona.extapps.eclipse.win32}/plugins"/>	
+	    <property name="sas.plugin.name"				value="${sas.bin}/com.rrs.corona.sas_1.0.0"/>
+	 	<property name="sas.lib"						value="lib"/>
+	    <property name="sas.doc"						value="${sas.main}/solutionsacceleratorstudio/doc"/>
+	
+	<path id="lib">
+		<fileset dir="${corona.externallibs}/${external.libs.log4j}"               	includes="*.jar"/>
+		<fileset dir="${corona.externallibs}/${external.libs.commons.logging}"      includes="*.jar"/>		
+		<fileset dir="${corona.externallibs}/${external.libs.jaxb}/lib"				includes="*.jar"/>
+		<fileset dir="${corona.externallibs}/jboss_4.0.2"               			includes="*.jar"/>
+		<fileset dir="${corona.externallibs}/${external.libs.jdbc}"              	includes="*.jar"/>
+		<fileset dir="${corona.corelibs}/licensevalidator"            				includes="*.jar"/>
+		<fileset dir="${corona.externallibs}/${external.libs.commons.codec}"        includes="*.jar" />
+		<fileset dir="${corona.externallibs}/${external.libs.jug}"            		includes="*.jar" />
+		<fileset dir="${corona.externallibs}/${external.libs.nativelibs32}" 	    includes="*.jar" />		
+		<fileset dir="${sas.main}/schema/bin"                		 				includes="*.jar"/>
+		<fileset dir="${corona.corelibs}/transport_framework"						includes="*.jar"/>
+		<fileset dir="${corona.corelibs}/kernel"                        			includes="*.jar"/>		
+		<fileset dir="${sas.main}/common/bin"                        				includes="*.jar"/>
+		<fileset dir="${eclipse.win32.plugins}"            							includes="org.eclipse.core.expressions_3.1.0.jar" />
+		<fileset dir="${eclipse.win32.plugins}"            							includes="org.eclipse.core.resources_3.1.0.jar" />
+		<fileset dir="${eclipse.win32.plugins}"            							includes="org.eclipse.core.runtime_3.1.0.jar" />
+        <fileset dir="${eclipse.win32.plugins}"									includes="org.eclipse.core.runtime.compatibility_3.1.0.jar" />
+		<fileset dir="${eclipse.win32.plugins}"           							includes="org.eclipse.draw2d_3.1.0.jar" />
+		<fileset dir="${eclipse.win32.plugins}"            							includes="org.eclipse.gef_3.1.0.jar" />
+		<fileset dir="${eclipse.win32.plugins}"            							includes="org.eclipse.help_3.1.0.jar" />
+		<fileset dir="${eclipse.win32.plugins}"            							includes="org.eclipse.jface_3.1.0.jar" />
+		<fileset dir="${eclipse.win32.plugins}"            							includes="org.eclipse.osgi_3.1.0.jar" />
+		<fileset dir="${eclipse.win32.plugins}"            							includes="org.eclipse.swt_3.1.0.jar" />
+        <fileset dir="${eclipse.win32.plugins}"            							includes="org.eclipse.swt.win32.win32.x86_3.1.0.jar" />
+		<fileset dir="${eclipse.win32.plugins}"            							includes="org.eclipse.ui_3.1.0.jar" />
+		<fileset dir="${eclipse.win32.plugins}"            							includes="org.eclipse.ui.forms_3.1.0.jar" />
+		<fileset dir="${eclipse.win32.plugins}"            							includes="org.eclipse.ui.ide_3.1.0.jar" />
+		<fileset dir="${eclipse.win32.plugins}"            							includes="org.eclipse.ui.views_3.1.0.jar" />
+		<fileset dir="${eclipse.win32.plugins}"            							includes="org.eclipse.ui.workbench_3.1.0.jar" />
+        <fileset dir="${eclipse.win32.plugins}"           							includes="org.eclipse.update.configurator_3.1.0.jar" />
+		<fileset dir="${eclipse.win32.plugins}"            							includes="org.eclipse.update.core_3.1.0.jar" />
+		<fileset dir="${eclipse.win32.plugins}"            							includes="org.eclipse.update.ui_3.1.0.jar" />
+		<fileset dir="${corona.externallibs}/${external.libs.startree}"       		includes="*.jar" />
+	</path>
+		
+						<!-- ****************** DELETING THE BIN DIRECTORY ********************************-->
+	<target name="prepare">
+
+		<echo message="Deleting directory"/>
+		<delete dir="${sas.bin}" />
+		<delete dir="${sas.doc}" />		
+		<mkdir dir="${sas.bin}" />
+		<mkdir dir="${sas.doc}" />
+
+	</target>
+					<!-- ****************************** COMPILING THE FILES *******************************-->
+	<target name="compile" depends="prepare">
+	<echo message="Compiling..........."/>
+		<javac srcdir="${sas.src}"            destdir="${sas.bin}">
+			<classpath refid="lib">
+			</classpath>
+		</javac>
+		<javadoc destdir="${sas.doc}"
+		                 private="true"
+		                 author="true"
+		                 version="true"
+		                 use="false"
+		                 windowtitle="Solutionsaceleratorstudio">
+		            <packageset dir="${sas.src}">
+						<include name="com/**" />
+		            </packageset>
+		            <classpath refid="lib" />
+		</javadoc>
+
+	</target> 
+
+		<!-- *********************************** MAKING JAR FILE ********************************************-->
+	<target name="makejar" depends="compile">
+	
+		<jar jarfile="${sas.main}/solutionsacceleratorstudio/bin/solutionsacceleratorstudio.jar" basedir="${sas.bin}" >
+			<fileset  dir ="${sas.main}/solutionsacceleratorstudio/src/"				includes="**/*.gif"/>
+			<fileset  dir ="${sas.main}/solutionsacceleratorstudio/src/"				includes="**/*.jpg"/>
+			<fileset  dir ="${sas.main}/solutionsacceleratorstudio/src/"				includes="**/*.png"/>
+			<fileset  dir ="${sas.main}/schema/bin"										includes="*.jar"/>
+	    </jar>
+		<jar jarfile="${sas.main}/solutionsacceleratorstudio/bin/bdmsasbridge.jar" basedir="${sas.bin}" includes="com/rrs/corona/server/sas/**">			
+		</jar>
+		<jar jarfile="${sas.main}/solutionsacceleratorstudio/bin/sasreceiver.jar" basedir="${sas.bin}" includes="com/rrs/corona/server/adapterreceiver/**">	
+		</jar>
+
+	</target>
+
+			<!-- ********************************** CREATING THE PLUGIN ************************************-->
+    <target name="makeplugin" depends="makejar">
+
+    	<mkdir dir="${sas.plugin.name}" />
+    	<copy file="${sas.main}/solutionsacceleratorstudio/bin/solutionsacceleratorstudio.jar"	todir="${sas.plugin.name}" />
+    	<copy file="${sas.main}/solutionsacceleratorstudio/plugin.xml"          				todir="${sas.plugin.name}" />
+    	<copy file="${sas.main}/solutionsacceleratorstudio/plugin_customization.ini"	        todir="${sas.plugin.name}" />
+    	<copy file="${sas.main}/solutionsacceleratorstudio/splash.bmp"          	            todir="${sas.plugin.name}" />
+		<copy file="${sas.main}/solutionsacceleratorstudio/license.xml"          				todir="${sas.plugin.name}" />
+    	    	
+    	<copy  todir= "${sas.plugin.name}/icons">         
+    	    	  <fileset dir="${sas.main}/solutionsacceleratorstudio/icons"				includes="**/*"/>
+    	</copy>
+    	<!-- ******************* COPYING THE TRANSPORT FRAMEWORK,JDBC,JDK,JAXB LIBRARIES ************************-->
+		<copy  todir= "${sas.plugin.name}/lib">  
+
+			<fileset dir="${sas.main}/common/bin"											includes="*.jar"/>
+			<fileset dir="${sas.main}/schema/bin"											includes="*.jar"/>
+			<fileset dir="${eclipse.win32.plugins}"											includes="org.eclipse.ui.forms_3.1.0.jar"/>
+    	    <fileset dir="${corona.externallibs}/${external.libs.jaxb}/lib"					includes="*.jar"/>
+			<fileset dir="${corona.externallibs}/${external.libs.jaxp}/lib"					includes="*.jar"/>
+			<fileset dir="${corona.externallibs}/${external.libs.jaxp}/lib/endorsed"		includes="*.jar"/>
+			<fileset dir="${corona.externallibs}/${external.libs.jwsdp.shared}/lib"			includes="*.jar"/>
+			<fileset dir="${corona.externallibs}/${external.libs.jwsdp.sjsxp}/lib"			includes="*.jar"/>
+			<fileset dir="${corona.corelibs}/transport_framework"							includes="corona-transport-framework.jar"/>
+			<fileset dir="${corona.corelibs}/kernel"										includes="*.jar"/>
+			<fileset dir="${corona.corelibs}/licensevalidator"								includes="*.jar"/>
+			<fileset dir="${corona.externallibs}/${external.libs.commons.codec}"            includes="*.jar" />
+			<fileset dir="${corona.externallibs}/${external.libs.jug}"            			includes="*.jar" />
+			<fileset dir="${corona.externallibs}/${external.libs.log4j}"					includes="*.jar"/>
+			<fileset dir="${corona.externallibs}/${external.libs.jdbc}"						includes="*.jar"/>
+			<fileset dir="${corona.externallibs}/${external.libs.jdk}/lib"					includes="*.jar"/>
+			<fileset dir="${corona.externallibs}/${external.libs.commons.logging}"			includes="*.jar"/>
+			
+    	</copy>
+			<!-- ***************************** COPYING THE OJB LIBRARIES ************************************-->
+		<copy  todir= "${sas.plugin.name}/lib/OJB_LIB_1.4">    
+		
+			<fileset dir="${corona.externallibs}/${external.libs.commons.collections}"		includes="*.jar"/>
+			<fileset dir="${corona.externallibs}/${external.libs.commons.dbcp}"				includes="*.jar"/>			 
+			<fileset dir="${corona.externallibs}/${external.libs.commons.lang}"				includes="*.jar"/>			 
+			<fileset dir="${corona.externallibs}/${external.libs.commons.pool}"				includes="*.jar"/>
+			<fileset dir="${corona.externallibs}/${external.libs.log4j}"					includes="log4j-1.2.9.jar"/>
+			<fileset dir="${corona.externallibs}/${external.libs.jdbc}"						includes="*.jar"/>
+			<fileset dir="${corona.externallibs}/${external.libs.commons.logging}"			includes="*.jar"/>
+			<fileset dir="${corona.externallibs}/${external.libs.ojb}"						includes="db-ojb-1.0.4.jar"/>
+			<fileset dir="${corona.externallibs}/${external.libs.ojb}"						includes="xercesImpl-2.7.1.jar"/>
+
+    	</copy>
+			<!-- ***************************** COPYING JBOSS4.0.2 LIBRARIES ************************************-->
+		<copy  todir= "${sas.plugin.name}/lib/jboss402">   
+		
+    	     	<fileset dir="${corona.externallibs}/jboss_4.0.2"							includes="*.jar"/>
+
+    	</copy>
+
+    </target>  	
+
+</project>
+

@@ -1,0 +1,259 @@
+<project name="SolutionsaAcceleratorStudio Deployment" default="corona.sas.deploy" basedir=".">
+		
+		<!-- =================== -->
+		<!-- Basic Configuration -->
+		<!-- =================== -->
+
+		<!-- ****************************** Module name(s) & version *********************-->
+
+		<property name="module.name"												value="SolutionsaAcceleratorStudio"/>
+		<property name="module.Name"												value="SolutionsaAcceleratorStudio"/>
+		<property name="module.version"												value="DEV"/>
+		
+		 <!-- ******************* ABSOLUTE VALUES ****************************************-->
+
+		<target name="base">
+
+			<property name="win32.all.corona.home"									value="${corona.deploy.win32.all.corona}" />	
+			<property name="linux.all.corona.home"									value="${corona.deploy.linux.all.corona}" />	
+			<property name="win32.client.corona.home"								value="${corona.deploy.win32.client.corona}"/>	
+			<property name="linux.client.corona.home"								value="${corona.deploy.linux.client.corona}"/>
+
+		</target>
+
+		<!-- ******************* INITIALIZING THE PROPERTIES ****************************************-->
+
+		<target name="initialize" depends="base">
+
+			<property name="corona.deploy.win32.all.corona.solutionsacceleratorstudio"																								value="${win32.all.corona.home}/solutionsacceleratorstudio"/>
+			<property name="corona.deploy.linux.all.corona.solutionsacceleratorstudio"																								value="${linux.all.corona.home}/solutionsacceleratorstudio"/>
+			<property name="corona.deploy.win32.client.corona.solutionsacceleratorstudio"	    																					value="${win32.client.corona.home}/solutionsacceleratorstudio"/>
+			<property name="corona.deploy.linux.client.corona.solutionsacceleratorstudio"																							value="${linux.client.corona.home}/solutionsacceleratorstudio"/>
+			<property name="sasvalue" 															value="com.rrs.corona.sas_1.0.0"/>
+
+		 </target>
+
+		<!-- *********************** CREATING DIRECTORIES *************************************-->
+
+		 <target name="clean"  depends="initialize">
+
+			<delete dir="${corona.deploy.win32.all.corona.solutionsacceleratorstudio}"/>
+			<delete dir="${corona.deploy.win32.client.corona.solutionsacceleratorstudio}"/>
+			<delete dir="${corona.deploy.linux.all.corona.solutionsacceleratorstudio}"/>
+			<delete dir="${corona.deploy.linux.client.corona.solutionsacceleratorstudio}"/>
+			<mkdir  dir="${corona.deploy.win32.all.corona.solutionsacceleratorstudio}"/>	
+			<mkdir  dir="${corona.deploy.win32.client.corona.solutionsacceleratorstudio}"/>
+			<mkdir  dir="${corona.deploy.linux.all.corona.solutionsacceleratorstudio}"/>	
+			<mkdir  dir="${corona.deploy.linux.client.corona.solutionsacceleratorstudio}"/>	
+			
+			<mkdir  dir="${corona.deploy.win32.all.corona.solutionsacceleratorstudio}/configuration"/>	
+			<mkdir  dir="${corona.deploy.win32.client.corona.solutionsacceleratorstudio}/configuration"/>
+			<mkdir  dir="${corona.deploy.linux.all.corona.solutionsacceleratorstudio}/configuration"/>	
+			<mkdir  dir="${corona.deploy.linux.client.corona.solutionsacceleratorstudio}/configuration"/>
+
+			
+			<mkdir  dir="${corona.deploy.win32.all.corona.solutionsacceleratorstudio}/license"/>	
+			<mkdir  dir="${corona.deploy.win32.client.corona.solutionsacceleratorstudio}/license"/>	
+			<mkdir  dir="${corona.deploy.linux.all.corona.solutionsacceleratorstudio}/license"/>	
+			<mkdir  dir="${corona.deploy.linux.client.corona.solutionsacceleratorstudio}/license"/>	
+			
+		  </target>
+		
+		<!-- ***************************** COPY THE ECLIPSE OF WINDOWS **************************-->
+
+		<target name="eclipse_win32.copy"  depends="initialize">
+
+			<copy todir="${corona.deploy.win32.all.corona.solutionsacceleratorstudio}">  
+				<fileset dir="${corona.extapps.eclipse.win32}"></fileset>						    			
+			</copy>
+			<copy todir="${corona.deploy.win32.client.corona.solutionsacceleratorstudio}">  
+				<fileset dir="${corona.extapps.eclipse.win32}"></fileset>						    			
+			</copy>
+			<copy   file="${corona.sources.main}/solutionsacceleratorstudio/config.ini" 			  											todir="${corona.deploy.win32.client.corona.solutionsacceleratorstudio}/configuration" overwrite="true"/>
+			<copy   file="${corona.sources.main}/solutionsacceleratorstudio/config.ini" 			 											todir="${corona.deploy.win32.all.corona.solutionsacceleratorstudio}/configuration" overwrite="true"/>
+			<copy   file="${corona.sources.main}/solutionsacceleratorstudio/splash.bmp" 			  															todir="${corona.deploy.win32.client.corona.solutionsacceleratorstudio}"/>
+			<copy   file="${corona.sources.main}/solutionsacceleratorstudio/splash.bmp" 			 															todir="${corona.deploy.win32.all.corona.solutionsacceleratorstudio}"/>
+			<copy   file="${corona.sources.main}/solutionsacceleratorstudio/license.xml" 			  															todir="${corona.deploy.win32.client.corona.solutionsacceleratorstudio}"/>
+			<copy   file="${corona.sources.main}/solutionsacceleratorstudio/license.xml" 			 															todir="${corona.deploy.win32.all.corona.solutionsacceleratorstudio}"/>
+			<copy todir="${corona.deploy.win32.all.corona.solutionsacceleratorstudio}/plugins/com.rrs.corona.sas_1.0.0">  
+				<fileset dir="${corona.sources.main}/solutionsacceleratorstudio/bin/com.rrs.corona.sas_1.0.0"></fileset>			  	
+			</copy>
+			<copy todir="${corona.deploy.win32.client.corona.solutionsacceleratorstudio}/plugins/com.rrs.corona.sas_1.0.0"> 
+				<fileset dir="${corona.sources.main}/solutionsacceleratorstudio/bin/com.rrs.corona.sas_1.0.0"></fileset>		
+			</copy>
+			<delete file="${corona.deploy.win32.all.corona.solutionsacceleratorstudio}/eclipse.exe"/>
+			<copy file="${corona.sources.main}/solutionsacceleratorstudio/sas.exe" 																				todir="${corona.deploy.win32.all.corona.solutionsacceleratorstudio}"/>
+			<delete file="${corona.deploy.win32.client.corona.solutionsacceleratorstudio}/eclipse.exe"/>
+			<copy file="${corona.sources.main}/solutionsacceleratorstudio/sas.exe" 																				todir="${corona.deploy.win32.client.corona.solutionsacceleratorstudio}"/>
+
+	 </target> 	 
+		 
+	 <!-- ***************************COPY THE ECLIPSE OF LINUX *******************************-->
+
+		<target name="eclipse_linux.copy" depends="initialize">
+
+			<copy todir="${corona.deploy.linux.all.corona.solutionsacceleratorstudio}">  
+				<fileset dir="${corona.extapps.eclipse.linux}"></fileset>						    			
+			</copy>
+			<copy todir="${corona.deploy.linux.client.corona.solutionsacceleratorstudio}">  
+				<fileset dir="${corona.extapps.eclipse.linux}"></fileset>						    			
+			</copy>
+			<copy  file="${corona.sources.main}/solutionsacceleratorstudio/config.ini"  													   todir="${corona.deploy.linux.client.corona.solutionsacceleratorstudio}/configuration" overwrite="true"/>
+			<copy  file="${corona.sources.main}/solutionsacceleratorstudio/config.ini"  													   todir="${corona.deploy.linux.all.corona.solutionsacceleratorstudio}/configuration" overwrite="true"/>
+			<copy   file="${corona.sources.main}/solutionsacceleratorstudio/splash.bmp" 			  															todir="${corona.deploy.linux.client.corona.solutionsacceleratorstudio}"/>
+			<copy   file="${corona.sources.main}/solutionsacceleratorstudio/splash.bmp" 			 															todir="${corona.deploy.linux.all.corona.solutionsacceleratorstudio}"/>
+			<copy   file="${corona.sources.main}/solutionsacceleratorstudio/splash.bmp" 			  											todir="${corona.deploy.linux.client.corona.solutionsacceleratorstudio}"/>
+			<copy   file="${corona.sources.main}/solutionsacceleratorstudio/splash.bmp" 			 											todir="${corona.deploy.linux.all.corona.solutionsacceleratorstudio}"/>
+			<copy   file="${corona.sources.main}/solutionsacceleratorstudio/license.xml" 			  															todir="${corona.deploy.linux.client.corona.solutionsacceleratorstudio}"/>
+			<copy   file="${corona.sources.main}/solutionsacceleratorstudio/license.xml" 			 															todir="${corona.deploy.linux.all.corona.solutionsacceleratorstudio}"/>
+			<copy todir="${corona.deploy.linux.all.corona.solutionsacceleratorstudio}/plugins/com.rrs.corona.sas_1.0.0"> 
+				<fileset dir="${corona.sources.main}/solutionsacceleratorstudio/bin/com.rrs.corona.sas_1.0.0"></fileset>
+			</copy>
+			<copy todir="${corona.deploy.linux.client.corona.solutionsacceleratorstudio}/plugins/com.rrs.corona.sas_1.0.0"> 
+				<fileset dir="${corona.sources.main}/solutionsacceleratorstudio/bin/com.rrs.corona.sas_1.0.0"></fileset>
+			</copy>
+			<delete file="${corona.deploy.linux.all.corona.solutionsacceleratorstudio}/eclipse.exe"/>
+			<copy file="${corona.sources.main}/solutionsacceleratorstudio/sas.exe" 																				todir="${corona.deploy.linux.all.corona.solutionsacceleratorstudio}"/>
+			<delete file="${corona.deploy.linux.client.corona.solutionsacceleratorstudio}/eclipse.exe"/>
+			<copy file="${corona.sources.main}/solutionsacceleratorstudio/sas.exe" 																				todir="${corona.deploy.linux.client.corona.solutionsacceleratorstudio}"/>
+
+		</target>
+		
+
+		<target name="bridge.deploy">
+
+			<!-- ****************** BDMSASBridge Copy **********************-->
+
+			<copy todir="${corona.deploy.win32.all.corona}/cms/${cms.destination}/lib"> 
+				<fileset file="${corona.sources.main}/solutionsacceleratorstudio/bin/bdmsasbridge.jar"></fileset>
+			</copy>
+			<copy todir="${corona.deploy.win32.server.corona}/cms/${cms.destination}/lib"> 
+				<fileset file="${corona.sources.main}/solutionsacceleratorstudio/bin/bdmsasbridge.jar"></fileset>		
+			</copy>
+			<copy todir="${corona.deploy.linux.all.corona}/cms/${cms.destination}/lib"> 
+				<fileset file="${corona.sources.main}/solutionsacceleratorstudio/bin/bdmsasbridge.jar"></fileset>			
+			</copy>
+			<copy todir="${corona.deploy.linux.server.corona}/cms/${cms.destination}/lib"> 
+				<fileset file="${corona.sources.main}/solutionsacceleratorstudio/bin/bdmsasbridge.jar"></fileset>
+			</copy>
+			
+			<!-- ********* SAS RECEIVER COPY ************ -->
+
+			<copy todir="${corona.deploy.win32.all.corona}/cms/${cms.destination}/lib"> 
+				<fileset file="${corona.sources.main}/solutionsacceleratorstudio/bin/sasreceiver.jar"></fileset>
+			</copy>
+			<copy todir="${corona.deploy.win32.server.corona}/cms/${cms.destination}/lib"> 
+				<fileset file="${corona.sources.main}/solutionsacceleratorstudio/bin/sasreceiver.jar"></fileset>
+   			</copy>
+			<copy todir="${corona.deploy.linux.all.corona}/cms/${cms.destination}/lib"> 
+				<fileset file="${corona.sources.main}/solutionsacceleratorstudio/bin/sasreceiver.jar"></fileset>
+			</copy>
+			<copy todir="${corona.deploy.linux.server.corona}/cms/${cms.destination}/lib"> 
+				<fileset file="${corona.sources.main}/solutionsacceleratorstudio/bin/sasreceiver.jar"></fileset>		
+			</copy>
+						
+			<!-- *************** COPYING COMMON ****************-->
+
+			<copy todir="${corona.deploy.win32.all.corona}/cms/${cms.destination}/lib"> 
+				<fileset file="${corona.sources.main}/common/bin/corona-common.jar"></fileset>	
+			</copy>
+			<copy todir="${corona.deploy.win32.server.corona}/cms/${cms.destination}/lib"> 
+				<fileset file="${corona.sources.main}/common/bin/corona-common.jar"></fileset>
+			</copy>
+			<copy todir="${corona.deploy.linux.all.corona}/cms/${cms.destination}/lib"> 
+				<fileset file="${corona.sources.main}/common/bin/corona-common.jar"></fileset>
+			</copy>
+			<copy todir="${corona.deploy.linux.server.corona}/cms/${cms.destination}/lib"> 
+				<fileset file="${corona.sources.main}/common/bin/corona-common.jar"></fileset>
+			</copy>		
+			
+			<!-- ******** COPYING CORONA TRANSPORTATION FRAMEWORK COPY ******** -->
+
+			<copy todir="${corona.deploy.win32.all.corona}/cms/${cms.destination}/lib"> 
+				<fileset file="${corona.corelibs}/transport_framework/corona-transport-framework.jar"></fileset>
+			</copy>
+			<copy todir="${corona.deploy.win32.server.corona}/cms/${cms.destination}/lib"> 
+					<fileset file="${corona.corelibs}/transport_framework/corona-transport-framework.jar"></fileset>		
+			</copy>
+			<copy todir="${corona.deploy.linux.all.corona}/cms/${cms.destination}/lib"> 
+				<fileset file="${corona.corelibs}/transport_framework/corona-transport-framework.jar"></fileset>		
+			</copy>
+			<copy todir="${corona.deploy.linux.server.corona}/cms/${cms.destination}/lib"> 
+				<fileset file="${corona.corelibs}/transport_framework/corona-transport-framework.jar"></fileset>	
+			</copy>	
+
+			<!-- ************** COPYING OJB LIBRARIES **************************** -->
+			<copy todir="${corona.deploy.win32.all.corona}/cms/${cms.destination}/lib"> 
+
+				<fileset dir="${corona.externallibs}/${external.libs.ojb}"						includes="*.jar"/>
+				<fileset dir="${corona.externallibs}/${external.libs.commons.collections}"		includes="*.jar"/>
+				<fileset dir="${corona.externallibs}/${external.libs.commons.dbcp}"				includes="*.jar"/>			 
+				<fileset dir="${corona.externallibs}/${external.libs.commons.lang}"				includes="*.jar"/>			 
+				<fileset dir="${corona.externallibs}/${external.libs.commons.pool}"				includes="*.jar"/>
+				<fileset dir="${corona.externallibs}/${external.libs.log4j}"					includes="log4j-1.2.9.jar"/>
+				<fileset dir="${corona.externallibs}/${external.libs.jdbc}"						includes="*.jar"/>
+				<fileset dir="${corona.externallibs}/${external.libs.commons.logging}"			includes="*.jar"/>
+				<fileset dir="${corona.externallibs}/${external.libs.commons.beanutils}"		includes="*.jar"/>
+				<fileset dir="${corona.externallibs}/${external.libs.commons.betwixt}"			includes="*.jar"/>
+				<fileset dir="${corona.externallibs}/${external.libs.commons.digester}"			includes="*.jar"/>
+				<fileset dir="${corona.externallibs}/${external.libs.commons.transaction}"		includes="*.jar"/>
+				<fileset dir="${corona.externallibs}/${external.libs.commons.math}"				includes="*.jar"/>
+
+			</copy>
+			<copy todir="${corona.deploy.win32.server.corona}/cms/${cms.destination}/lib"> 
+
+				<fileset dir="${corona.externallibs}/${external.libs.ojb}"						includes="*.jar"/>
+				<fileset dir="${corona.externallibs}/${external.libs.commons.collections}"		includes="*.jar"/>
+				<fileset dir="${corona.externallibs}/${external.libs.commons.dbcp}"				includes="*.jar"/>			 
+				<fileset dir="${corona.externallibs}/${external.libs.commons.lang}"				includes="*.jar"/>			 
+				<fileset dir="${corona.externallibs}/${external.libs.commons.pool}"				includes="*.jar"/>
+				<fileset dir="${corona.externallibs}/${external.libs.log4j}"					includes="log4j-1.2.9.jar"/>
+				<fileset dir="${corona.externallibs}/${external.libs.jdbc}"						includes="*.jar"/>
+				<fileset dir="${corona.externallibs}/${external.libs.commons.logging}"			includes="*.jar"/>
+				<fileset dir="${corona.externallibs}/${external.libs.commons.beanutils}"		includes="*.jar"/>
+				<fileset dir="${corona.externallibs}/${external.libs.commons.betwixt}"			includes="*.jar"/>
+				<fileset dir="${corona.externallibs}/${external.libs.commons.digester}"			includes="*.jar"/>
+				<fileset dir="${corona.externallibs}/${external.libs.commons.transaction}"		includes="*.jar"/>
+				<fileset dir="${corona.externallibs}/${external.libs.commons.math}"				includes="*.jar"/>
+
+			</copy>
+			<copy todir="${corona.deploy.linux.all.corona}/cms/${cms.destination}/lib"> 
+
+				<fileset dir="${corona.externallibs}/${external.libs.ojb}"						includes="*.jar"/>
+				<fileset dir="${corona.externallibs}/${external.libs.commons.collections}"		includes="*.jar"/>
+				<fileset dir="${corona.externallibs}/${external.libs.commons.dbcp}"				includes="*.jar"/>			 
+				<fileset dir="${corona.externallibs}/${external.libs.commons.lang}"				includes="*.jar"/>			 
+				<fileset dir="${corona.externallibs}/${external.libs.commons.pool}"				includes="*.jar"/>
+				<fileset dir="${corona.externallibs}/${external.libs.log4j}"					includes="log4j-1.2.9.jar"/>
+				<fileset dir="${corona.externallibs}/${external.libs.jdbc}"						includes="*.jar"/>
+				<fileset dir="${corona.externallibs}/${external.libs.commons.logging}"			includes="*.jar"/>
+				<fileset dir="${corona.externallibs}/${external.libs.commons.beanutils}"		includes="*.jar"/>
+				<fileset dir="${corona.externallibs}/${external.libs.commons.betwixt}"			includes="*.jar"/>
+				<fileset dir="${corona.externallibs}/${external.libs.commons.digester}"			includes="*.jar"/>
+				<fileset dir="${corona.externallibs}/${external.libs.commons.transaction}"		includes="*.jar"/>
+				<fileset dir="${corona.externallibs}/${external.libs.commons.math}"				includes="*.jar"/>
+
+			</copy>
+			<copy todir="${corona.deploy.linux.server.corona}/cms/${cms.destination}/lib"> 
+
+				<fileset dir="${corona.externallibs}/${external.libs.ojb}"						includes="*.jar"/>
+				<fileset dir="${corona.externallibs}/${external.libs.commons.collections}"		includes="*.jar"/>
+				<fileset dir="${corona.externallibs}/${external.libs.commons.dbcp}"				includes="*.jar"/>			 
+				<fileset dir="${corona.externallibs}/${external.libs.commons.lang}"				includes="*.jar"/>			 
+				<fileset dir="${corona.externallibs}/${external.libs.commons.pool}"				includes="*.jar"/>
+				<fileset dir="${corona.externallibs}/${external.libs.log4j}"					includes="log4j-1.2.9.jar"/>
+				<fileset dir="${corona.externallibs}/${external.libs.jdbc}"						includes="*.jar"/>
+				<fileset dir="${corona.externallibs}/${external.libs.commons.logging}"			includes="*.jar"/>
+				<fileset dir="${corona.externallibs}/${external.libs.commons.beanutils}"		includes="*.jar"/>
+				<fileset dir="${corona.externallibs}/${external.libs.commons.betwixt}"			includes="*.jar"/>
+				<fileset dir="${corona.externallibs}/${external.libs.commons.digester}"			includes="*.jar"/>
+				<fileset dir="${corona.externallibs}/${external.libs.commons.transaction}"		includes="*.jar"/>
+				<fileset dir="${corona.externallibs}/${external.libs.commons.math}"				includes="*.jar"/>
+
+			</copy>	
+
+		</target>
+
+		<target name="corona.sas.deploy"		depends="clean, eclipse_win32.copy,eclipse_linux.copy, bridge.deploy"/>
+
+	</project>
